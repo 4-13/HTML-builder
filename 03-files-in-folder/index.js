@@ -1,12 +1,12 @@
 const path = require('path');
 
 const formatBytes = require('../helpers/formatBytes');
-const { getFileInfo, getFolderContent, filterFolderContentDirentFiles } = require('../helpers/fileSystem');
+const { getFileInfo, getFolderContent, groupFolderContent } = require('../helpers/fileSystem');
 
 const solution = async () => {
   const pathToFolder = path.join(__dirname, 'secret-folder');
   const folderContent = await getFolderContent(pathToFolder);
-  const files = await filterFolderContentDirentFiles(folderContent);
+  const { files } = await groupFolderContent(folderContent);
 
   const filesInfo = await Promise.all(files.map(async ({ name: direntName }) => {
     const filePath = path.join(pathToFolder, direntName);

@@ -4,8 +4,18 @@ const getFolderContent = (pathToFolder, options = {}) => {
   return readdir(pathToFolder, { withFileTypes: true, ...options });
 };
 
-const filterFolderContentDirentFiles = (folderContent) => {
-  return folderContent.filter((item) => item.isFile());
+const groupFolderContent = (folderContent) => {
+  return folderContent.reduce((acc, item) => {
+    if (item.isFile()) {
+      acc.files.push(item);
+    }
+    else if (item.isDirectory()) {
+      acc.directories.push(item);
+    }
+
+
+    return acc;
+  }, { files: [], directories: [] });
 };
 
 const getFileInfo = async (pathToFIle) => {
@@ -14,5 +24,5 @@ const getFileInfo = async (pathToFIle) => {
 };
 
 module.exports.getFolderContent = getFolderContent;
-module.exports.filterFolderContentDirentFiles = filterFolderContentDirentFiles;
+module.exports.groupFolderContent = groupFolderContent;
 module.exports.getFileInfo = getFileInfo;
