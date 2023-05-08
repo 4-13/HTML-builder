@@ -42,8 +42,11 @@ const copyFolder = async (src, dest) => {
     if (item.isFile()) {
       copy(path.join(src, item.name), path.join(dest, item.name));
     } else if (item.isDirectory()) {
-      createFolder(path.join(dest, item.name));
-      copyFolder(path.join(src, item.name), path.join(dest, item.name));
+      createFolder(path.join(dest, item.name)).then(
+        () => {
+          copyFolder(path.join(src, item.name), path.join(dest, item.name));
+        }
+      );
     }
   });
 };
