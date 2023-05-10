@@ -1,6 +1,6 @@
 
 const { createWriteStream } = require('fs');
-const { createInterface } = require('node:readline/promises');
+const { createInterface } = require('node:readline');
 const path = require('path');
 const { stdin } = require('process');
 
@@ -31,12 +31,12 @@ const consoleInputToFile = (writeFilePath) => {
 
   rl.on('line', (line) => {
     switch (line.trim()) {
-    case 'exit':
-      rl.close();
-      break;
-    default:
-      writableStream.write(`${line}\n`);
-      break;
+      case 'exit':
+        rl.close();
+        break;
+      default:
+        writableStream.write(`${line}\n`);
+        break;
     }
   })
     .on('error', error => {
